@@ -22,6 +22,7 @@
         // var player = document.getElementById("player").value;
         var player = document.forms["search-form"]["player"].value;
         var xmlhttp;
+        var url = "search_player="+player;
         xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -36,6 +37,18 @@
     function addNewPlayer() {
         var player = document.forms["add-form"]["player"].value;
         var team = document.forms["add-form"]["team"].value;
+        var xmlhttp;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("add-msg").innerHTML=player+"is in the team:"+(xmlhttp.responseText);
+            } else {
+                document.getElementById("add-msg").innerHTML="Cannot find this player!"
+            }
+        }
+        xmlhttp.open("GET",url,true);
+	    xmlhttp.send();
+
         var url = "add_player="+player+"&team="+team;
         if (r == "true") {
             document.getElementById("add-msg").innerHTML="Add successfully: "+player+", "+team;
