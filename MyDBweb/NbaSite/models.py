@@ -12,7 +12,7 @@ class Team(models.Model):
 
 class Player(models.Model):
 	player_name = models.CharField(max_length = 200)
-	begin_date = models.DateTimeField('date attend')
+	begin_date = models.DateField('date attend')
 	
 	team = models.ForeignKey(Team, on_delete = models.CASCADE)
 
