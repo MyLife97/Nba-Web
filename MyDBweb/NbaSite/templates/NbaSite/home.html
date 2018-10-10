@@ -21,6 +21,8 @@
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
+                var str = xmlhttp.responseText;
+                alert(str);
                 return xmlhttp.responseText;
             } else {
                 return "";
@@ -51,12 +53,21 @@
     }
     function deletePlayer() {
         var player = document.forms["delete-form"]["player"].value;
-        var dbState = true;
         var r = ajaxGet("delete?player="+player);
         if (r == "true") {
-            document.getElementById("delete-msg").innerHTML="Delete successfully: "+player+", "+team;
+            document.getElementById("delete-msg").innerHTML="Delete successfully: "+player;
         } else {
             document.getElementById("delete-msg").innerHTML="Failed to delete this player @_@";
+        }
+    }
+    function changeTeam() {
+        var player = document.forms["change-form"]["player"].value;
+        var team = document.forms["change-form"]["team"].value;
+        var r = ajaxGet("change?player="+player);
+        if (r == "true") {
+            document.getElementById("change-msg").innerHTML="Change sucessfully: now "+player+" is in "+team;
+        } else {
+            document.getElementById("change-msg").innerHTML="Failed to change this player @_@";
         }
     }
 </script>
@@ -92,6 +103,14 @@
             球员名: <input type="text" name="player">
             <button type="button" onclick="deletePlayer()">确认</button>
             <p id="delete-msg"> </p>
+        </form>
+    </div>
+    <div id="change" style="background-color:rgb(211, 112, 241); height:100px;">
+        <b>更改查询球员数据</b>
+        <form name="change-form">
+            球员名: <input type="text" name="player">
+            <button type="button" onclick="changeTeam()">确认</button>
+            <p id="change-msg"> </p>
         </form>
     </div>
 </div>
