@@ -5,7 +5,7 @@
 <title>NBA球员数据库</title> 
 
 <script>
-    function ajaxTest(url, out) {
+    function ajaxGet(url) {
         var xmlhttp;
         if (window.XMLHttpRequest)
         {
@@ -21,40 +21,42 @@
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
-                document.getElementById(out).innerHTML=xmlhttp.responseText;
+                return xmlhttp.responseText;
+            } else {
+                return "";
             }
         }
         xmlhttp.open("GET",url,true);
 	    xmlhttp.send();
     }
-    function showPlayerMsg() {
+    function searchPlayerMsg() {
         // var player = document.getElementById("player").value;
         var player = document.forms["search-form"]["player"].value;
-        var team = "";
-        var dbState = true;
-        if (dbState) {
-            document.getElementById("search-msg").innerHTML =  player + " is in the team:" + team;
+        var team = ajaxGet("search?player="+player);
+        if (team) {
+            document.getElementById("search-msg").innerHTML=player+"is in the team:"+team;
         } else {
-            document.getElementById("search-msg").innerHTML =  "cannot find" + player;
+            document.getElementById("search-msg").innerHTML="Cannot find this player!"
         }
     }
     function addNewPlayer() {
         var player = document.forms["add-form"]["player"].value;
         var team = document.forms["add-form"]["team"].value;
-        var dbState = true;
-        if (dbState) {
-            document.getElementById("add-msg").innerHTML = "Add successfully: " + player + " , " + team;
+        var r = ajaxGet("add?player="+player+"&team="+team);
+        if (r == "true") {
+            document.getElementById("add-msg").innerHTML="Add successfully: "+player+", "+team;
         } else {
-            document.getElementById("add-msg").innerHTML = "cannot add" + player + ',' + team;
+            document.getElementById("add-msg").innerHTML="Failed to add this player @_@";
         }
     }
     function deletePlayer() {
         var player = document.forms["delete-form"]["player"].value;
         var dbState = true;
-        if (dbState) {
-            document.getElementById("delete-msg").innerHTML = "Delete successfully: " + player;
+        var r = ajaxGet("delete?player="+player);
+        if (r == "true") {
+            document.getElementById("delete-msg").innerHTML="Delete successfully: "+player+", "+team;
         } else {
-            document.getElementById("delete-msg").innerHTML = "cannot delete" + player + ',' + team;
+            document.getElementById("delete-msg").innerHTML="Failed to delete this player @_@";
         }
     }
 </script>
@@ -71,7 +73,7 @@
         <b>查询球员信息</b>
         <form name="search-form">
             球员名: <input type="text" name="player">
-            <button type="button" onclick="showPlayerMsg()">确认</button>
+            <button type="button" onclick="searchPlayerMsg()">确认</button>
             <p id="search-msg"> </p>
         </form>
     </div>
@@ -90,14 +92,6 @@
             球员名: <input type="text" name="player">
             <button type="button" onclick="deletePlayer()">确认</button>
             <p id="delete-msg"> </p>
-        </form>
-    </div>
-    <div>
-        <b>测试后台连接</b>
-        <form name="test-form">
-            request: <input type="text" name="request">
-            <button type="button" onclick="ajaxTest('player=james','test-msg')">confirm</button>
-            <p id="test-msg"> </p>
         </form>
     </div>
 </div>
