@@ -7,23 +7,10 @@
 <script>
     function ajaxGet(url) {
         var xmlhttp;
-        if (window.XMLHttpRequest)
-        {
-            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-            xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {
-            // IE6, IE5 浏览器执行代码
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange=function()
-        {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-            {
-                var str = xmlhttp.responseText;
-                alert(str);
-                return xmlhttp.responseText;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
             } else {
                 return "";
             }
@@ -34,17 +21,22 @@
     function searchPlayerMsg() {
         // var player = document.getElementById("player").value;
         var player = document.forms["search-form"]["player"].value;
-        var team = ajaxGet("search?player="+player);
-        if (team) {
-            document.getElementById("search-msg").innerHTML=player+"is in the team:"+team;
-        } else {
-            document.getElementById("search-msg").innerHTML="Cannot find this player!"
+        var xmlhttp;
+        xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("search-msg").innerHTML=player+"is in the team:"+(xmlhttp.responseText);
+            } else {
+                document.getElementById("search-msg").innerHTML="Cannot find this player!"
+            }
         }
+        xmlhttp.open("GET",url,true);
+	    xmlhttp.send();
     }
     function addNewPlayer() {
         var player = document.forms["add-form"]["player"].value;
         var team = document.forms["add-form"]["team"].value;
-        var r = ajaxGet("add?player="+player+"&team="+team);
+        var url = "add_player="+player+"&team="+team;
         if (r == "true") {
             document.getElementById("add-msg").innerHTML="Add successfully: "+player+", "+team;
         } else {
@@ -53,7 +45,7 @@
     }
     function deletePlayer() {
         var player = document.forms["delete-form"]["player"].value;
-        var r = ajaxGet("delete?player="+player);
+        var r = ajaxGet("delete_player="+player);
         if (r == "true") {
             document.getElementById("delete-msg").innerHTML="Delete successfully: "+player;
         } else {
@@ -63,7 +55,7 @@
     function changeTeam() {
         var player = document.forms["change-form"]["player"].value;
         var team = document.forms["change-form"]["team"].value;
-        var r = ajaxGet("change?player="+player);
+        var r = ajaxGet("change_player="+player);
         if (r == "true") {
             document.getElementById("change-msg").innerHTML="Change sucessfully: now "+player+" is in "+team;
         } else {
