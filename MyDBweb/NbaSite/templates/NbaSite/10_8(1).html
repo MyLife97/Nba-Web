@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>NBA球员数据库</title> 
+
+<script>
+    function ajaxTest(url, out) {
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {
+            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                document.getElementById(out).innerHTML=xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET",url,true);
+	    xmlhttp.send();
+    }
+    function showPlayerMsg() {
+        // var player = document.getElementById("player").value;
+        var player = document.forms["search-form"]["player"].value;
+        var team = "";
+        var dbState = true;
+        if (dbState) {
+            document.getElementById("search-msg").innerHTML =  player + " is in the team:" + team;
+        } else {
+            document.getElementById("search-msg").innerHTML =  "cannot find" + player;
+        }
+    }
+    function addNewPlayer() {
+        var player = document.forms["add-form"]["player"].value;
+        var team = document.forms["add-form"]["team"].value;
+        var dbState = true;
+        if (dbState) {
+            document.getElementById("add-msg").innerHTML = "Add successfully: " + player + " , " + team;
+        } else {
+            document.getElementById("add-msg").innerHTML = "cannot add" + player + ',' + team;
+        }
+    }
+    function deletePlayer() {
+        var player = document.forms["delete-form"]["player"].value;
+        var dbState = true;
+        if (dbState) {
+            document.getElementById("delete-msg").innerHTML = "Delete successfully: " + player;
+        } else {
+            document.getElementById("delete-msg").innerHTML = "cannot delete" + player + ',' + team;
+        }
+    }
+</script>
+
+</head>
+<body>
+ 
+<div id="container">
+    <div id="header" style="background-color:rgb(35, 147, 221);">
+        <h1 style="margin-bottom:0;">NBA球员数据库</h1>
+    </div>
+    
+    <div id="search" style="background-color:rgb(236, 217, 109); height:100px;">
+        <b>查询球员信息</b>
+        <form name="search-form">
+            球员名: <input type="text" name="player">
+            <button type="button" onclick="showPlayerMsg()">确认</button>
+            <p id="search-msg"> </p>
+        </form>
+    </div>
+    <div id="add" style="background-color:rgb(148, 201, 99); height:120px;">
+        <b>添加新球员</b>
+        <form name="add-form">
+            球员名：<input type="text" name="player"><br>
+            球队名：<input tyep="text" name="team">
+            <button type="button" onclick="addNewPlayer()">确认</button>
+            <p id="add-msg"> </p>
+        </form>
+    </div>
+    <div id="delete" style="background-color:rgb(95, 211, 205); height:100px;">
+        <b>删除查询球员数据</b>
+        <form name="delete-form">
+            球员名: <input type="text" name="player">
+            <button type="button" onclick="deletePlayer()">确认</button>
+            <p id="delete-msg"> </p>
+        </form>
+    </div>
+    <div>
+        <b>测试后台连接</b>
+        <form name="test-form">
+            request: <input type="text" name="request">
+            <button type="button" onclick="ajaxTest(\"\")">confirm</button>
+        </form>
+    </div>
+</div>
+ 
+</body>
+</html>
