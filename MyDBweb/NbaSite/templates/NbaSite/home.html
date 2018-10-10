@@ -12,11 +12,7 @@
         var url = "search_player="+player;
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                if (xmlhttp.responseText!="False") {
-                    document.getElementById("search-msg").innerHTML=player+"is in the team:"+(xmlhttp.responseText);
-                } else {
-                    document.getElementById("search-msg").innerHTML="Can not find this player @_@";
-                }
+                document.getElementById("search-msg").innerHTML=xmlhttp.responseText;
             }
         }
         xmlhttp.open("GET",url,true);
@@ -29,11 +25,7 @@
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                if (xmlhttp.responseText=="True") {
-                    document.getElementById("add-msg").innerHTML="Add successfully: "+player+", "+team;
-                } else {
-                    document.getElementById("add-msg").innerHTML="Failed to add this player @_@";
-                }
+                document.getElementById("add-msg").innerHTML=xmlhttp.responseText;
             }
         }
         xmlhttp.open("GET",url,true);
@@ -45,14 +37,8 @@
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                if (xmlhttp.responseText=="True") {
-                    document.getElementById("delete-msg").innerHTML="Delete successfully: "+player;
-                } else {
-                    document.getElementById("delete-msg").innerHTML="Failed to delete this player @_@";
-                }
-            } else {
-                document.getElementById("delete-msg").innerHTML="Failed to delete this player @_@";
-            }
+                document.getElementById("delete-msg").innerHTML=xmlhttp.responseText;
+                            }
         }
         xmlhttp.open("GET",url,true);
 	    xmlhttp.send();
@@ -64,13 +50,7 @@
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                if (xmlhttp.responseText=="True") {
-                    document.getElementById("change-msg").innerHTML="Change sucessfully: now "+player+" is in "+team;
-                } else {
-                    document.getElementById("change-msg").innerHTML="Failed to change this player @_@";
-                }
-            } else {
-                document.getElementById("change-msg").innerHTML="Failed to change this player @_@";
+                document.getElementById("change-msg").innerHTML=xmlhttp.responseText;
             }
         }
         xmlhttp.open("GET",url,true);
@@ -112,9 +92,10 @@
         </form>
     </div>
     <div id="change" style="background-color:rgb(211, 112, 241); height:100px;">
-        <b>更改查询球员数据</b>
+        <b>更改·球员数据</b>
         <form name="change-form">
             球员名: <input type="text" name="player">
+            球队名：<input tyep="text" name="team">
             <button type="button" onclick="changeTeam()">确认</button>
             <p id="change-msg"> </p>
         </form>
