@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ajax test</title>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<button id="ajaxTest">AJAX 测试</button>
+<script>
+  $("#ajaxTest").click(function () {
+    $.ajax({
+      url: "/ajax_test/",
+      type: "POST",
+      data: {username: "djb", password: 123456},
+      success: function (data) {
+        alert(data)
+      }
+    })
+  })
+</script>
+</body>
+</html>
