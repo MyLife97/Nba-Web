@@ -8,12 +8,12 @@ urlpatterns = [
 	#Home Page Pattern
     path('', views.home, name='home'),	
     #Search Pattern
-    path(r'search\?player=<str:player_name>/', views.search_by_name, name = 'search_by_name'),
+    path('search_player=<str:player_name>/', views.search_by_name, name = 'search_by_name'),
     #Add Pattern
-    path('add?player=<str:player_name>&team=<str:team>/', views.add_player, name = 'add_player'),
+    path('add_player=<str:player_name>_team=<str:team>/', views.add_player, name = 'add_player'),
     #Delete Pattern
-    path('delete?player=<str:player_name>/', views.delete_by_name, name = 'delete_by_name'),
+    path('delete_player=<str:player_name>/', views.delete_by_name, name = 'delete_by_name'),
     #Change Pattern
-    path('change?player=<str:player_name>&team=<str:team>/', views.change_team_by_name, name = 'change_team_by_name'),
+    path('change_player=<str:player_name>_team=<str:team>/', views.change_team_by_name, name = 'change_team_by_name'),
 
 ]

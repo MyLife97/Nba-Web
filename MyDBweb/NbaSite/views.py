@@ -21,9 +21,13 @@ def home(request):
 def search_by_name(request, player_name):
 	try:
 		player = Player.objects.get(player_name = player_name)
+		print(player_name)
+		# content = request.POST.get('name')
+		return HttpResponse("Team:" + str(player.team) + " Begin Date:" + str(player.begin_date))
 	except Player.DoesNotExist:
-		return HttpResponse("Player does not exist")
-	return HttpResponse(player)
+		print("not found")
+		return HttpResponse("False")
+	# return HttpResponse(player)
 
 def delete_by_name(request, player_name):
 	try:
@@ -45,11 +49,11 @@ def change_team_by_name(request, player_name, new_team):
 def add_player(request, player_name, begin_date = datetime.datetime.now(), team = ''):
 	try:
 		old_player = Player.objects.get(player_name = player_name)
-		return HttpResponse("Add Fail.The player is already in the Table!")
+		return HttpResponse("False")
 	except Player.DoesNotExist:
 		new_player = Player(player_name = player_name, begin_date = begin_date, team = team)
 		new_player.save()
-		return HttpResponse("Add Succeed.")
+		return HttpResponse("True")
 	#return render(request, 'polls/detail.html', {'question': question})
 
 	# return HttpResponse(player)
